@@ -32,6 +32,8 @@ import socket from "../Socket";
 
 
 const Home = () => {
+  console.log(socket,'socket=====');
+  
     let userData = localStorage.getItem("user-data");
     userData = JSON.parse(userData);
     // const fileInputRef = useRef();
@@ -94,7 +96,7 @@ const Home = () => {
         // console.log(selectedUser,'selectedUser user');
         // console.log(isUserTyping==true && from === selectedUser?.userName,'isUserTyping==true && from === selectedUser user');
         // console.log(message,'message user');
-       
+          
         setIsTyping(isUserTyping==true && from === selectedUser?.userName);
         
       });
@@ -132,7 +134,7 @@ const Home = () => {
       const timeout = setTimeout(() => {
         socket.emit("typing", { to: selectedUser.userName, from: userData.userName,isUserTyping:false });
         // setTypinguser('');
-      }, 2000); // Adjust the delay as needed
+      }, 1000); // Adjust the delay as needed
   
       setTypingTimeout(timeout); 
       
@@ -162,7 +164,6 @@ const Home = () => {
     };
 
     const logOut = () => {
-      console.log('dsf logout');
       localStorage.clear();
       navigate("/signin")
     }
