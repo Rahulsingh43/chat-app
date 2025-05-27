@@ -188,7 +188,7 @@ const Home = () => {
             </div>
 
             {/* User List */}
-            <div className={`sm:w-1/3 w-full ${selectedUser ? 'hidden sm:block' : 'block'}`}>
+            <div className={`sm:w-1/3 w-full ${selectedUser ? 'hidden sm:block' : 'block'}`}> 
               <div className="flex flex-col h-full p-4 bg-white shadow-lg">
                 <div className="text-xl  mb-4"><span className="font-semibold">Chats </span> &nbsp; <span className="txt-sm">{userData?.userName}</span></div>
                 <input
