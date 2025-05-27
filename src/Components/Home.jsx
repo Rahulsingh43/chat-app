@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, {useEffect, useState} from "react";
-import { FaPaperclip, FaMicrophone,FaHome, FaBell, FaSearch, FaCog, FaUserCircle  } from 'react-icons/fa';
+import { useNavigate } from "react-router-dom";
+import { FaPaperclip, FaMicrophone,FaHome, FaBell, FaSearch, FaCog, FaUserCircle,FaSignOutAlt  } from 'react-icons/fa';
 import { IoSend } from 'react-icons/io5';
 import socket from "../Socket";
 
@@ -29,10 +30,12 @@ import socket from "../Socket";
 
 
 
-let userData = localStorage.getItem("user-data");
-userData = JSON.parse(userData);
+
 const Home = () => {
+    let userData = localStorage.getItem("user-data");
+    userData = JSON.parse(userData);
     // const fileInputRef = useRef();
+    const navigate = useNavigate();
     const [typingTimeout, setTypingTimeout] = useState();
     // const [files, setFiles] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
@@ -67,7 +70,7 @@ const Home = () => {
     useEffect(() => {
 
       const fetchUser = async () => {
-         const response = await axios.get('http://127.0.0.1:3307/api/user/getAlluser',{
+         const response = await axios.get('https://chat-app-backend-8lel.onrender.com/api/user/getAlluser',{
           headers: {
             'x-access-token': localStorage.getItem("x-access-token"), // Set the custom header
          },
@@ -108,10 +111,14 @@ const Home = () => {
       };
     },[selectedUser]);
 
-    const handleTyping = () => {
+    const handleTyping = (e) => {
       // console.log(userData);
       // console.log(selectedUser,'selcred');
         // Emit "typing started" if not already typing
+          if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault(); // prevent newline if using textarea
+              sendMessage();
+           }
       if (!isTyping) {
         // console.log(userData.userName,'ds');
         
@@ -131,6 +138,7 @@ const Home = () => {
       
     };
 
+
     const sendMessage = async() => {
           // const formData = new FormData();
           // files.forEach(file => formData.append('files', file));
@@ -140,8 +148,8 @@ const Home = () => {
           // formData.append('message', message);
           // const uploadRes = await axios.post('http://127.0.0.1:3307/upload', formData);
           // const fileUrls = uploadRes.data.files; // array of file URLs
-
-      const msgData = {
+     if (message) {
+         const msgData = {
         sender_id: userData.userName,
         receiver_id: selectedUser.userName,
         content: message
@@ -149,8 +157,15 @@ const Home = () => {
       socket.emit("send_message", msgData);
       setChat((prev) => [...prev, { ...msgData, is_read: false }]);
       setMessage("");
+     }
+   
     };
 
+    const logOut = () => {
+      console.log('dsf logout');
+      localStorage.clear();
+      navigate("/signin")
+    }
   
     return(
         <>
@@ -158,12 +173,13 @@ const Home = () => {
             <div className="w-full sm:w-16 bg-[#131140] flex sm:flex-col items-center justify-between sm:justify-start py-4 sm:py-6 px-4 sm:px-0 space-y-6 sm:space-y-8">
             <div className="flex sm:flex-col gap-6">
               <FaHome className="text-white text-xl cursor-pointer" />
-              <FaSearch className="text-white text-xl cursor-pointer" />
-              <FaBell className="text-white text-xl cursor-pointer" />
-              <FaCog className="text-white text-xl cursor-pointer" />
+              {/* <FaSearch className="text-white text-xl cursor-pointer" /> */}
+              {/* <FaBell className="text-white text-xl cursor-pointer" /> */}
+              {/* <FaCog className="text-white text-xl cursor-pointer" /> */}
               </div>
               <div className="hidden sm:block absolute bottom-4">
-                <FaUserCircle className="text-white text-2xl cursor-pointer" />
+                <FaSignOutAlt className="text-white text-2xl cursor-pointer" onClick={logOut} />
+                {/* <FaUserCircle className="text-white text-2xl cursor-pointer" /> */}
               </div>
               <div className="block sm:hidden">
                 <FaUserCircle className="text-white text-2xl cursor-pointer" />
@@ -248,7 +264,7 @@ const Home = () => {
                     className="flex-1 border rounded-full px-4 py-2 focus:outline-none"
                   />
                   <FaMicrophone className="text-gray-500 cursor-pointer" />
-                  <button className="text-blue-500" type="submit"  onClick={sendMessage}>
+                  <button className="text-blue-500 cursor-pointer" type="submit"  onClick={sendMessage}>
                     <IoSend size={20} />
                   </button>
                 </div>

@@ -19,7 +19,7 @@ const Login = () => {
         // console.log("Form Submitted:", email,password);
         try {
             
-            const response = await axios.post('http://127.0.0.1:3307/api/auth/login', {
+            const response = await axios.post('https://chat-app-backend-8lel.onrender.com/api/auth/login', {
               email,
               password
             });
@@ -69,12 +69,12 @@ value={password} onChange={(e) => setPassword(e.target.value)} required />
 {/* <p className="text-red-500 text-xs italic">Please choose a password.</p> */}
 </div>
 <div className="flex items-center justify-between">
-<button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+<button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer" type="submit">
 Sign In
 </button>
-<a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
+{/* <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
 Forgot Password?
-</a>
+</a> */}
 </div>
  <p className="text-center text-sm mt-4">
           Don’t have an account?{' '}
@@ -84,7 +84,7 @@ Forgot Password?
   </p>
 </form>
 <p className="text-center text-gray-500 text-xs">
-&copy;2020 Acme Corp. All rights reserved.
+&copy;2020 Chat Corp. All rights reserved.
 </p>
  </div> 
 </div>

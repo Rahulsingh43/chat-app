@@ -15,7 +15,7 @@ const Register = () => {
         // Add sign-in logic here (API call, validation etc.)
         try {
             
-            const response = await axios.post('http://127.0.0.1:3307/api/auth/register', {
+            const response = await axios.post('https://chat-app-backend-8lel.onrender.com/api/auth/register', {
               email,
               userName,
               password
@@ -71,18 +71,18 @@ value={password} onChange={(e) => setPassword(e.target.value)} placeholder="****
 {/* <p className="text-red-500 text-xs italic">Please choose a password.</p> */}
 </div>
 <div className="flex items-center justify-between">
-<button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+<button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer" type="submit">
 Sign Up
 </button>
-<a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
+{/* <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
 Forgot Password?
-</a>
+</a> */}
 </div>
 <p className="text-center text-sm mt-4">
           Do you have an account?{' '}
-    <Link to="/signin" className="text-blue-600 hover:underline">
-            Sign In
-    </Link>
+<Link to="/signin" className="text-blue-600 hover:underline">
+        Sign In
+</Link>
   </p>
 </form>
 <div>
@@ -94,13 +94,13 @@ Forgot Password?
         </p> */}
 </div>
 <p className="text-center text-gray-500 text-xs">
-&copy;2020 Acme Corp. All rights reserved.
+&copy;2020 Chat Corp. All rights reserved.
 </p>
  </div> 
 </div>
 </div>
         </>
     )
-}
+}  
 
 export default Register;
