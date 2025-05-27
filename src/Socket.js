@@ -1,6 +1,6 @@
 import { io } from "socket.io-client";
 
-const socket = io("http://127.0.0.1:3307", {
+const socket = io("https://chat-app-backend-8lel.onrender.com", {
   auth: { token: localStorage.getItem("x-access-token") }, // optional JWT
 });
 
